@@ -33,23 +33,16 @@ public class AppUserController {
     AppUserServiceImplementaion appUserServiceImplementaion;
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppUser> getAppUser(@PathVariable Long id) {
+    public ResponseEntity<AppUser> getAppUser(@PathVariable String id) {
         return new ResponseEntity<>( appUserServiceImplementaion.getAppUser(id),HttpStatus.FOUND);
     }
 
-    @MessageMapping("user.addUser")
-    @SendTo("/user/topic")
-    public ResponseEntity<AppUser> setAppUser(@Valid @Payload AppUser user) {
+    @PostMapping("/")
+    public ResponseEntity<AppUser> setAppUser(@Valid @RequestBody AppUser user) {
         return new ResponseEntity<>(appUserServiceImplementaion.setAppUser(user),HttpStatus.CREATED);
     }
-
     
-    @MessageMapping("user.disconnectUser")
-    @SendTo("/user/topic")
-    public AppUser dissconnectAppUser(@Payload AppUser user){
-        appUserServiceImplementaion.disconnected(user);
-        return user;
-    }
+
 
     @GetMapping("/allconnectedusers")
     public ResponseEntity<List<AppUser>> findallconnectedusers(){

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.aja</groupId>
-	<artifactId>chat_app</artifactId>
+	<artifactId>ethos_iitg</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chat_app</name>
+	<name>Ethos IITG</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

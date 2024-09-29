@@ -13,6 +13,7 @@ import com.aja.chat_app.Repository.AppUserRepository;
 import com.aja.chat_app.Repository.ChatRepository;
 import com.aja.chat_app.exception.ChatExist;
 import com.aja.chat_app.exception.EntityNotFoundException;
+import com.aja.chat_app.exception.UsernameNotFoundEception;
 
 import lombok.AllArgsConstructor;
 
@@ -22,26 +23,27 @@ public class ChatServiceImplementation implements ChatService {
 
     ChatRepository chatRepository;
     AppUserRepository appUserRepository;
-    private final SimpMessagingTemplate messagingTemplate;
+
     @Override
     public Chat createChat(Chat c) {
-      Optional<Chat> isc =   chatRepository.findByUser1IdAndUser2Id(c.getUser1Id(),c.getUser2Id());
+      Optional<Chat> isc =   chatRepository.findByUsername1AndUsername2(c.getUsername1(),c.getUsername2());
       if(isc.isPresent()){
          throw new ChatExist(isc.get().getId(), "alredy");
       }
-      AppUser u =  AppUserServiceImplementaion.unwrapAppUser(appUserRepository.findById(c.getUser1Id()),c.getUser1Id());
-      AppUserServiceImplementaion.unwrapAppUser(appUserRepository.findById(c.getUser2Id()),c.getUser2Id());
+      AppUser u =  AppUserServiceImplementaion.unwrapAppUser(appUserRepository.findById(c.getUsername1()),c.getUsername1());
+      AppUserServiceImplementaion.unwrapAppUser(appUserRepository.findById(c.getUsername2()),c.getUsername2());
       c.setAppUser(u);
 
         return(chatRepository.save(c));
     }
 
     @Override
-    public List<Message> getMessages(Long chat_id, Long user_id) {
+    public List<Message> getMessages(Long chat_id, String username) {
         Optional<Chat> c = chatRepository.findById(chat_id);
+        AppUser a = AppUserServiceImplementaion.unwrapAppUser(appUserRepository.findById(username), username);
        if(c.isPresent()){
             Chat uc = c.get();
-            if(uc.getUser1Id() != user_id && uc.getUser2Id() != user_id){
+            if(!uc.getUsername1().equals(username) && !uc.getUsername2().equals(username)){
                 throw new ChatExist(chat_id,"not present");
             }
            return uc.getMessages();
@@ -51,13 +53,13 @@ public class ChatServiceImplementation implements ChatService {
     }
 
     @Override
-    public List<Chat> getallchatsOfUser(Long user_id) {
+    public List<Chat> getallchatsOfUser(String user_id) {
         Optional<List<Chat>> chats = chatRepository.findAllByAppUserId(user_id);
         if(chats.isPresent()){
             List<Chat> uchats = chats.get();
             return uchats;
         }
-       throw new EntityNotFoundException(user_id,AppUser.class);
+       throw new UsernameNotFoundEception(user_id,AppUser.class);
     }
 
    

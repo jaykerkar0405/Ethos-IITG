@@ -9,7 +9,7 @@ const connectingElement = document.querySelector('.connecting');
 const chatArea = document.querySelector('#chat-messages');
 const logout = document.querySelector('#logout');
 
-let stompClient = null;
+//let stompClient = null;
 let nickname = null;
 let fullname = null;
 let selectedUserId = null;
@@ -22,8 +22,8 @@ function connect(event) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
-        const socket = new SockJS('/ws');
-        stompClient = Stomp.over(socket);
+        const socket = new SockJS('http://localhost:8080/ws');  // Use SockJS to handle WebSocket connection
+        const stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
     }

@@ -9,7 +9,7 @@ import com.aja.chat_app.Enity.Status;
 public interface ChatService {
 
     public Chat createChat(Chat c);
-    public List<Message> getMessages(Long chat_id, Long user_is);
-    public List<Chat> getallchatsOfUser(Long user_id);
+    public List<Message> getMessages(Long chat_id, String username);
+    public List<Chat> getallchatsOfUser(String username);
   
 }

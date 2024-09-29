@@ -41,7 +41,7 @@ public class Message {
 
    
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "username")
     public AppUser appUser;
 
 

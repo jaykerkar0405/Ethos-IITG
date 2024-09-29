@@ -23,14 +23,14 @@ public class MessageServiceImplementation implements MessageService{
     ChatRepository chatRepository;
 
     @Override
-    public Message send(Message message,Long chat_id, Long user_id) {
+    public Message send(Message message,Long chat_id, String user_id) {
         AppUser user   =  AppUserServiceImplementaion.unwrapAppUser(appUserRepository.findById(user_id),user_id);
         Optional<Chat> c = chatRepository.findById(chat_id);
         if(!c.isPresent()){
             throw new EntityNotFoundException(chat_id, Chat.class);
         }
         Chat uc = c.get();
-        if(!uc.getUser1Id().equals(user_id) && !uc.getUser2Id().equals(user_id)){
+        if(!uc.getUsername1().equals(user_id) && !uc.getUsername2().equals(user_id)){
             throw new ChatExist(chat_id, "not present");
         }
         message.setAppUser(user);

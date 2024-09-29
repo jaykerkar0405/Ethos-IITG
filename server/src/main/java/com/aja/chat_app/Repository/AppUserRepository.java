@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.aja.chat_app.Enity.AppUser;
 
 @Repository
-public interface AppUserRepository extends CrudRepository<AppUser,Long>{
+public interface AppUserRepository extends CrudRepository<AppUser,String>{
      List<AppUser> findAllByStatus(com.aja.chat_app.Enity.Status online);
 
 }

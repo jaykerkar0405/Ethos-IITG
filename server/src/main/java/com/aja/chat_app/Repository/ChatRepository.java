@@ -15,9 +15,9 @@ import com.aja.chat_app.Enity.Chat;
 
 @Repository
 public interface ChatRepository extends CrudRepository<Chat,Long> {
-        @Query("SELECT c FROM Chat c WHERE c.user1Id = :appUserId OR c.user2Id = :appUserId")
-        Optional<List<Chat>> findAllByAppUserId(@Param("appUserId") Long appUserId);
-        Optional<Chat> findByUser1IdAndUser2Id(Long userid_1,Long userid_2);
+        @Query("SELECT c FROM Chat c WHERE c.username1 = :appUserId OR c.username2 = :appUserId")
+        Optional<List<Chat>> findAllByAppUserId(@Param("appUserId") String appUserId);
+        Optional<Chat> findByUsername1AndUsername2(String userid_1,String username_2 );
        
         
 

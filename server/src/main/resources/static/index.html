@@ -1,31 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>WebSocket Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
-    <h2>WebSocket Test</h2>
-    <button id="sendMessage">Send Message</button>
-    <div id="messages"></div>
-
+    <h1>WebSocket Chat</h1>
+    <div id="chat"></div>
     <script>
-        const socket = new WebSocket('ws://localhost:8080/ws');
+        // Establish connection
+        const socket = new SockJS('http://localhost:8080/ws');  // Use SockJS to handle WebSocket connection
+        const stompClient = Stomp.over(socket);
 
-        socket.onopen = function(event) {
-            console.log('WebSocket is open now.');
-        };
+        // Connect to WebSocket
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
 
-        socket.onmessage = function(event) {
-            document.getElementById('messages').innerHTML += `<p>${event.data}</p>`;
-        };
+            // Subscribe to a topic (e.g., to receive messages)
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
+                showMessageOutput(JSON.parse(messageOutput.body));
+            });
+        }, function (error) {
+            console.error('Connection error: ', error);
+        });
 
-        socket.onclose = function(event) {
-            console.log('WebSocket is closed now.');
-        };
-
-        document.getElementById('sendMessage').onclick = function() {
-            socket.send('Hello from the HTML page!');
-        };
+        // Function to display messages in the chat
+        function showMessageOutput(message) {
+            const chatDiv = document.getElementById('chat');
+            const messageElement = document.createElement('p');
+            messageElement.appendChild(document.createTextNode(message.content));
+            chatDiv.appendChild(messageElement);
+        }
     </script>
 </body>
 </html>

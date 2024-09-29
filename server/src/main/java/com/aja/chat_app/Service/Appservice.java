@@ -9,7 +9,7 @@ import com.aja.chat_app.Enity.Status;
 public interface Appservice {
 
     public AppUser setAppUser(AppUser user);
-    public AppUser getAppUser(Long id);
+    public AppUser getAppUser(String username);
       public AppUser disconnected(AppUser user);
     public List<AppUser> findConnectedUser();
 

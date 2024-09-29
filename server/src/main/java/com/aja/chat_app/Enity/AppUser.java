@@ -28,9 +28,8 @@ import lombok.Setter;
 public class AppUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "username",unique = true)
+    private String username;
 
    
 
@@ -46,6 +45,7 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
     private List<Message> messages;
     
+    @JsonIgnore
     @Column(name = "status ")
     private Status status;
 }

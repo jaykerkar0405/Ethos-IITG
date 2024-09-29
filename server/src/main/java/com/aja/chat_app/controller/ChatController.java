@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/Create_Chat")
+@RequestMapping("/api/Chat")
 public class ChatController {
     ChatServiceImplementation chatServiceImplementation;
 
@@ -33,13 +33,13 @@ public class ChatController {
     }
 
     @GetMapping("/getMessages/{chat_id}/user/{user_id}")
-    public ResponseEntity<List<Message>> getChats(@PathVariable Long chat_id ,@PathVariable Long user_id) {
+    public ResponseEntity<List<Message>> getChats(@PathVariable Long chat_id ,@PathVariable String user_id) {
         return new ResponseEntity<>(chatServiceImplementation.getMessages(chat_id,user_id),HttpStatus.OK); 
     }
     
 
     @GetMapping("/Friends/user/{user_id}")
-    public ResponseEntity<List<Chat>> getMethodName(@PathVariable Long user_id) {
+    public ResponseEntity<List<Chat>> getMethodName(@PathVariable String user_id) {
         return new ResponseEntity<>(chatServiceImplementation.getallchatsOfUser(user_id),HttpStatus.OK);
     }
     

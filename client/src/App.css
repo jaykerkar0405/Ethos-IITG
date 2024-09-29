@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer utilities {
+  body {
+    @apply bg-[#111516];
+    font-family: "Poppins";
+  }
+
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-zinc-400;
   }

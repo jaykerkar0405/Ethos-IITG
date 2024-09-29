@@ -1,0 +1,17 @@
+# Use OpenJDK 21 as the base image (non-alpine)
+FROM openjdk:21-jdk
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the Maven wrapper and source code to the container
+COPY . .
+
+# Run Maven to install dependencies and compile the project
+RUN ./mvnw install
+
+# Expose the port on which Spring Boot will run
+EXPOSE 8080
+
+# Run the application using Maven
+CMD ["./mvnw", "spring-boot:run"]

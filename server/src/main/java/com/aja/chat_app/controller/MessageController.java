@@ -36,31 +36,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/Message")
 public class MessageController {
     
-   private final SimpMessagingTemplate messagingTemplate;
+   
    MessageServiceImplementation messageServiceImplementation;
    ChatRepository chatRepository;
 
     @PostMapping("/send/chat/{chat_id}/user/{user_Id}")
-    public ResponseEntity<Message> postMethodName(@Valid @RequestBody Message message,@PathVariable Long chat_id , @PathVariable Long user_Id) {
-        messagingTemplate.convertAndSend("/topic/chatroom/" + chat_id, message);
+    public ResponseEntity<Message> postMethodName(@Valid @RequestBody Message message,@PathVariable Long chat_id , @PathVariable String user_Id) {
         return new ResponseEntity<>(messageServiceImplementation.send(message, chat_id, user_Id),HttpStatus.ACCEPTED);
     }
 
-    @MessageMapping("/chat/{chat_id}/sender/{sender_id}")
-    public void processMessage(@Valid @Payload @RequestBody Message message,@PathVariable Long chat_id,@PathVariable Long sender_id){
-        messageServiceImplementation.send(message, chat_id, sender_id);
-        messagingTemplate.convertAndSendToUser(
-            getrecipientid(chat_id, sender_id),"/queue/messages",
-            ChatNotification.builder()
-            .Chat_id(chat_id.toString())
-            .sender_id(sender_id.toString())
-            .recipient_id(getrecipientid(chat_id, sender_id))
-            .content(message.getContent())
-            .build()
-        );
 
 
-    }
+    /* 
     public String getrecipientid(Long chat_id,Long sender_id){
         Optional<Chat> c = chatRepository.findById(chat_id);
         if(c.isPresent()){
@@ -74,6 +61,7 @@ public class MessageController {
         }
         throw new EntityNotFoundException(chat_id, Chat.class);
     }
+        */
     
 
 }

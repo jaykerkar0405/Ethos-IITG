@@ -40,11 +40,11 @@ public class Chat {
 
     @NotNull(message = "user id cannot be null")
     @Column(name="user_1")
-    private Long user1Id; 
+    private String username1; 
 
     @NotNull(message = "user id cannot be null")
     @Column(name="user_2")
-    private Long user2Id; 
+    private String username2; 
 
     @JsonIgnore
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
@@ -52,7 +52,7 @@ public class Chat {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "AppUser" ,referencedColumnName = "id")
+    @JoinColumn(name = "AppUser" ,referencedColumnName = "username")
     public AppUser appUser;
 
 }

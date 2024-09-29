@@ -25,6 +25,7 @@ public class ChatAppApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		/** 
 		AppUser afnan = new AppUser(null, "afnan",null, null,Status.ONLINE);
 		AppUser jay = new AppUser(null, "jay", null, null,Status.ONLINE);
 		AppUser yash = new AppUser(null, "yash", null, null,Status.ONLINE);
@@ -33,7 +34,7 @@ public class ChatAppApplication implements CommandLineRunner {
 		appUserRepository.save(jay);
 		appUserRepository.save(yash);
 		appUserRepository.save(anish);
-		
+		*/
 		
 		
 		
